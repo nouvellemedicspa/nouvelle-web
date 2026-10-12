@@ -24,25 +24,25 @@
       <a href="#contacto">Contacto</a>
     </nav>
 
-    <a class="button button-dark header-cta" href="#contacto">Agendar cita</a>
+    <a id="headerCta" class="button button-dark header-cta" href="#contacto">Agendar cita</a>
   </header>
 
   <main>
     <section class="hero" id="inicio">
       <div class="hero-copy">
-        <p class="eyebrow">Spa & Medicina Estética</p>
-        <h1>Tu belleza,<br><em>en su mejor versión.</em></h1>
-        <p class="hero-text">
+        <p id="heroEyebrow" class="eyebrow">Spa & Medicina Estética</p>
+        <h1 id="heroTitle">Tu belleza,<br><em>en su mejor versión.</em></h1>
+        <p id="heroBody" class="hero-text">
           Un espacio donde bienestar, estética y ciencia se encuentran
           para crear experiencias hechas a tu medida.
         </p>
         <div class="hero-actions">
-          <a class="button button-dark" href="#contacto">Agendar cita</a>
+          <a id="heroCta" class="button button-dark" href="#contacto">Agendar cita</a>
           <a class="text-link" href="#servicios">Descubrir tratamientos →</a>
         </div>
       </div>
 
-      <div class="hero-visual image-slot image-slot-hero" data-slot="hero">
+      <div id="heroImageSlot" class="hero-visual image-slot image-slot-hero" data-slot="hero">
         <span>Imagen principal</span>
         <small>Tu novia podrá cambiarla desde el panel</small>
       </div>
@@ -75,7 +75,7 @@
       </div>
 
       <div class="service-grid">
-        <article class="service-card service-card-large">
+        <article class="service-card service-card-large" data-service-slug="faciales">
           <div class="image-slot" data-slot="faciales">
             <span>Imagen · Faciales</span>
           </div>
@@ -87,7 +87,7 @@
           </div>
         </article>
 
-        <article class="service-card">
+        <article class="service-card" data-service-slug="medicina-estetica">
           <div class="image-slot" data-slot="medicina">
             <span>Imagen · Medicina estética</span>
           </div>
@@ -99,7 +99,7 @@
           </div>
         </article>
 
-        <article class="service-card">
+        <article class="service-card" data-service-slug="pestanas">
           <div class="image-slot" data-slot="pestanas">
             <span>Imagen · Pestañas</span>
           </div>
@@ -111,7 +111,7 @@
           </div>
         </article>
 
-        <article class="service-card service-card-wide">
+        <article class="service-card service-card-wide" data-service-slug="body-bienestar">
           <div class="image-slot" data-slot="body">
             <span>Imagen · Body</span>
           </div>
@@ -126,13 +126,13 @@
     </section>
 
     <section class="editorial-feature">
-      <div class="image-slot feature-image" data-slot="editorial">
+      <div id="editorialImageSlot" class="image-slot feature-image" data-slot="editorial">
         <span>Imagen editorial</span>
       </div>
       <div class="feature-copy">
         <p class="eyebrow">Tratamiento destacado</p>
-        <h2>Menos exceso.<br>Más intención.</h2>
-        <p>
+        <h2 id="editorialTitle">Menos exceso.<br>Más intención.</h2>
+        <p id="editorialBody">
           Este espacio servirá para destacar un tratamiento, una novedad
           o una promoción sin cambiar la estructura de la página.
         </p>
@@ -166,19 +166,19 @@
       <div class="contact-card">
         <div class="contact-row">
           <span>WhatsApp</span>
-          <strong>Por configurar</strong>
+          <strong id="contactWhatsapp">Por configurar</strong>
         </div>
         <div class="contact-row">
           <span>Instagram</span>
-          <strong>Por configurar</strong>
+          <strong id="contactInstagram">Por configurar</strong>
         </div>
         <div class="contact-row">
           <span>Ubicación</span>
-          <strong>Por configurar</strong>
+          <strong id="contactAddress">Por configurar</strong>
         </div>
         <div class="contact-row">
           <span>Horario</span>
-          <strong>Por configurar</strong>
+          <strong id="contactHours">Por configurar</strong>
         </div>
       </div>
     </section>
@@ -190,6 +190,8 @@
     <p>© <span id="year"></span> Nouvelle</p>
   </footer>
 
-  <script src="app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js?v=1"></script>
+  <script src="app.js?v=3"></script>
 </body>
 </html>
