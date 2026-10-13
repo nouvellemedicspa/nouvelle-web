@@ -30,6 +30,7 @@
     .btn{border:1px solid var(--line);background:var(--paper);color:var(--ink);min-height:42px;padding:0 16px;cursor:pointer;text-transform:uppercase;letter-spacing:.1em;font-size:10px}
     .btn.primary{background:var(--ink);color:white;border-color:var(--ink)}
     .btn.gold{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+.btn.remove{color:var(--danger);border-color:rgba(139,61,61,.35);background:#fffaf8}
     .btn:disabled{opacity:.55;cursor:wait}
     .hidden{display:none!important}
     .card{background:rgba(251,248,243,.88);border:1px solid var(--line);padding:26px;margin-bottom:22px}
@@ -142,6 +143,7 @@
               <img id="heroPreview" class="upload-preview" alt="">
               <input id="heroImageFile" type="file" accept="image/jpeg,image/png,image/webp">
               <button id="uploadHeroBtn" class="btn" type="button">Subir / cambiar imagen</button>
+              <button id="removeHeroBtn" class="btn remove" type="button">Quitar imagen</button>
               <span class="upload-note">JPG, PNG o WebP · máximo 5 MB</span>
             </div>
             <input id="heroImageUrl" type="hidden">
@@ -171,6 +173,7 @@
             <img id="editorialPreview" class="upload-preview" alt="">
             <input id="editorialImageFile" type="file" accept="image/jpeg,image/png,image/webp">
             <button id="uploadEditorialBtn" class="btn" type="button">Subir / cambiar imagen</button>
+            <button id="removeEditorialBtn" class="btn remove" type="button">Quitar imagen</button>
             <span class="upload-note">JPG, PNG o WebP · máximo 5 MB</span>
           </div>
           <input id="editorialImageUrl" type="hidden">
@@ -350,6 +353,7 @@
                 <img class="upload-preview svc-preview" src="${escapeHtml(service.image_url||'')}" alt="" ${service.image_url?'':'style="display:none"'}>
                 <input class="svc-image-file" type="file" accept="image/jpeg,image/png,image/webp">
                 <button class="btn upload-service-image" type="button">Subir / cambiar imagen</button>
+                <button class="btn remove remove-service-image" type="button">Quitar imagen</button>
                 <span class="upload-note">JPG, PNG o WebP · máximo 5 MB</span>
               </div>
               <input class="svc-image" type="hidden" value="${escapeHtml(service.image_url||'')}">
@@ -384,6 +388,29 @@
           }finally{
             btn.disabled=false;
             btn.textContent='Subir / cambiar imagen';
+          }
+        });
+      });
+
+      document.querySelectorAll('.remove-service-image').forEach(btn=>{
+        btn.addEventListener('click',async()=>{
+          const card=btn.closest('.service');
+          if(!confirm('¿Quitar esta imagen de la página?')) return;
+          try{
+            btn.disabled=true;
+            const hidden=card.querySelector('.svc-image');
+            const preview=card.querySelector('.svc-preview');
+            const fileInput=card.querySelector('.svc-image-file');
+            hidden.value='';
+            preview.removeAttribute('src');
+            preview.style.display='none';
+            fileInput.value='';
+            await saveService(card,false);
+            showStatus('Imagen quitada del servicio');
+          }catch(error){
+            showStatus(error.message,'error');
+          }finally{
+            btn.disabled=false;
           }
         });
       });
@@ -465,6 +492,41 @@
           showStatus(error.message,'error');
         }finally{
           btn.disabled=false;btn.textContent='Subir / cambiar imagen';
+        }
+      });
+
+
+      $('removeHeroBtn').addEventListener('click',async()=>{
+        if(!confirm('¿Quitar la imagen principal de la página?')) return;
+        const btn=$('removeHeroBtn');
+        try{
+          btn.disabled=true;
+          $('heroImageFile').value='';
+          $('heroImageUrl').value='';
+          setPreview('heroPreview','');
+          await updateSettings({hero_image_url:null});
+          showStatus('Imagen principal quitada');
+        }catch(error){
+          showStatus(error.message,'error');
+        }finally{
+          btn.disabled=false;
+        }
+      });
+
+      $('removeEditorialBtn').addEventListener('click',async()=>{
+        if(!confirm('¿Quitar la imagen editorial de la página?')) return;
+        const btn=$('removeEditorialBtn');
+        try{
+          btn.disabled=true;
+          $('editorialImageFile').value='';
+          $('editorialImageUrl').value='';
+          setPreview('editorialPreview','');
+          await updateSettings({editorial_image_url:null});
+          showStatus('Imagen editorial quitada');
+        }catch(error){
+          showStatus(error.message,'error');
+        }finally{
+          btn.disabled=false;
         }
       });
 
